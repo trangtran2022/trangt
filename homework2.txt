@@ -120,7 +120,7 @@ void loan(float* totalAmount){
         monthlyInterestRate = interestRate / 12.0 / 100.0;
 
         printf("What is the number of payment?\n");
-                                                                                                121,1-8       75%
+                                                                                               
 scanf("%d",&numberOfPayments);
 
         double rateN = pow(1 + monthlyInterestRate, numberOfPayments);
