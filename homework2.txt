@@ -1,0 +1,142 @@
+
+/* name : Trang Tran
+ * date: 07/31/2023
+ * description: a program that displays a menu and ask the user to pick out the options
+ */
+
+#include <stdio.h>
+//include the math library
+#include <math.h>
+
+#define VENDING 1
+#define LOAN 2
+#define QUIT 3
+
+int menu();
+void selection(int choice,float* totalAmount);
+float vending();
+void loan();
+
+// main function
+int main(){
+//do while loop
+//declare local variable choice
+        int choice;
+//local var to store the total amount
+        float totalAmount = 0;
+        do{
+                choice=menu();
+                selection(choice,&totalAmount);
+        }
+        while(choice!=QUIT);
+        printf ("The total amount = %.2f\n",totalAmount);
+        return 0;
+}
+
+//menu function
+int menu(){
+//decalre local variable choice
+        int choice;
+// do while loop to display the menu
+        do{
+                printf("Menu list:\n");
+                printf("1. Vending machine\n");
+                printf("2. Loan\n");
+                printf("3. Quit\n");
+                printf("Enter your selection:\n");
+                //scan user input
+                scanf("%d",&choice);
+        }
+        while(choice<1 || choice >3);
+        return choice;
+}
+
+//selection function
+void selection(int choice,float* totalAmount){
+//switch statement used to executing 1 condtion from multiple condition
+        switch(choice){
+                case VENDING:
+                        *totalAmount += vending();
+                        break;
+                case LOAN:
+                        loan(totalAmount);
+                         break;
+                case QUIT:
+                        printf("Quit!\n");
+                        break;
+                default:
+                        printf("The choice you enter is not valid. Please try again!\n");
+                break;
+        }
+
+}
+
+//vending machine function
+float vending(){
+//local variable price
+        int price;
+//do while loop to ask the user to enter the price until the price is valid
+        do{
+                printf("Enter the price of the item between 25 cents to 1 dollar:\n");
+                //read the user's input
+                scanf("%d",&price);
+        }
+//between 25 cents to 1 dollar (100 cents)
+        while(price < 25 || price > 100);
+//the change left over
+        int change = 100 - price;
+//number of quarters
+        int quart = change / 25;
+//update change to remaining amount after removing quarters
+        change %=25;
+//number of dime
+        int dime = change / 10;
+        change %=10;
+//number of nickle
+        int nickel = change / 5;
+
+//display the sample dialog
+        printf("You bought an item for %d cents and gave me a dollar so your change is:\n",price);
+        printf ("%d quarters, \n%d dimes, and\n%d nickels.\n", quart, dime, nickel);
+
+        return price/100.0;
+}
+
+//loan function
+void loan(float* totalAmount){
+//local variable declare, double and interger
+        double loanAmount;
+        double interestRate;
+        double monthlyInterestRate;
+        int numberOfPayments;
+        double totalAmountPaidBack = 0;
+
+        printf("What is the loan amount?\n");
+        scanf("%lf",&loanAmount);
+
+        printf("What is the monthly rate of interest?\n");
+        scanf("%lf",&interestRate);
+//divide by 12 then further divide by 100
+        monthlyInterestRate = interestRate / 12.0 / 100.0;
+
+        printf("What is the number of payment?\n");
+                                                                                                121,1-8       75%
+scanf("%d",&numberOfPayments);
+
+        double rateN = pow(1 + monthlyInterestRate, numberOfPayments);
+        double monthlyPayment = loanAmount * monthlyInterestRate / (1 - 1 / rateN);
+
+    // Calculate the total payment
+        double totalAmountPaid = monthlyPayment * numberOfPayments;
+        double totalInterestPaid = totalAmountPaid - loanAmount;
+
+        totalAmountPaidBack += totalAmountPaid;
+//display the loan data and payment
+        printf("Loan Amount: $ %.2lf\n", loanAmount);
+        printf("Monthly Interest Rate: %.0lf\n", interestRate);
+        printf("Number of Payments: %d\n", numberOfPayments);
+        printf("Monthly Payment: $ %.2lf\n", monthlyPayment);
+        printf("Amount Paid Back: $ %.2lf\n", totalAmountPaidBack);
+        printf("Interest Paid: $ %.2lf\n", totalInterestPaid);
+}
+
